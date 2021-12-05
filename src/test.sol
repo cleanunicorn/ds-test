@@ -84,6 +84,22 @@ contract DSTest {
         }
     }
 
+    function assertEq(bytes memory a, bytes memory b, string memory err) internal {
+        if (keccak256(a) != keccak256(b)) {
+            emit log_named_string ("Error", err);
+            assertEq(a, b);
+        }
+    }    
+
+    function assertEq(bytes memory a, bytes memory b) internal {
+        if (keccak256(a) != keccak256(b)) {
+            emit log("Error: a == b not satisfied [bytes]");
+            emit log_named_bytes("  Expected", b);
+            emit log_named_bytes("    Actual", a);
+            fail();
+        }
+    }
+
     function assertEq(bytes32 a, bytes32 b) internal {
         if (a != b) {
             emit log("Error: a == b not satisfied [bytes32]");
